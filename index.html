@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Center for Wealth Data | wealthdata.org</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0e0e;
+    --paper: #f2ede4;
+    --paper-dim: #e8e2d8;
+    --gold: #b8922a;
+    --gold-lt: #d4ab52;
+    --green: #1a3328;
+    --green-mid: #234839;
+    --muted: rgba(14,14,14,0.52);
+    --rule: rgba(14,14,14,0.1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 1000;
+    pointer-events: none;
+    opacity: .028;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0 4rem;
+    height: 60px;
+    background: rgba(242,237,228,.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+    overflow: visible;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: .55rem;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .nav-logo-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: .95rem;
+    letter-spacing: .01em;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .nav-logo-dot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+  .nav-logo-url {
+    font-family: 'DM Mono', monospace;
+    font-size: .58rem;
+    letter-spacing: .08em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+  .nav-links {
+    display: flex; gap: 1.8rem; list-style: none;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .nav-links li { display: flex; align-items: center; }
+  .nav-links a {
+    font-family: 'DM Sans', sans-serif;
+    font-size: .78rem;
+    font-weight: 400;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: .55;
+    transition: opacity .2s;
+    white-space: nowrap;
+    line-height: 1;
+  }
+  .nav-links a:hover { opacity: 1; }
+  .nav-links .cta-link {
+    opacity: 1;
+    background: var(--green);
+    color: var(--paper);
+    padding: .6rem 1.4rem;
+    font-size: .72rem;
+    letter-spacing: .05em;
+    transition: background .2s;
+    white-space: nowrap;
+    line-height: 1;
+    display: flex; align-items: center;
+  }
+  .nav-links .cta-link:hover { background: var(--green-mid); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7rem 4.5rem 7rem 4.5rem;
+    border-right: 1px solid var(--rule);
+    position: relative;
+  }
+  .hero-right {
+    display: flex; flex-direction: column; justify-content: flex-end;
+    background: var(--green);
+    padding: 4rem 4.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  /* decorative grid on right panel */
+  .hero-right::before {
+    content: '';
+    position: absolute; inset: 0; opacity: .06;
+    background-image:
+      linear-gradient(rgba(178,146,42,1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(178,146,42,1) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  /* big watermark letter */
+  .hero-right::after {
+    content: 'W';
+    position: absolute; bottom: -.15em; right: -.05em;
+    font-family: 'DM Serif Display', serif;
+    font-size: 28rem;
+    color: rgba(178,146,42,.07);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: .8rem;
+    margin-bottom: 2.5rem;
+    opacity: 0; animation: fadeUp .7s ease forwards .15s;
+  }
+  .eyebrow-line {
+    width: 32px; height: 1px; background: var(--gold);
+  }
+  .eyebrow-text {
+    font-family: 'DM Mono', monospace;
+    font-size: .65rem; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2.8rem, 5vw, 4.4rem);
+    line-height: 1.08;
+    letter-spacing: -.01em;
+    color: var(--ink);
+    opacity: 0; animation: fadeUp .9s ease forwards .3s;
+  }
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-body {
+    margin-top: 2.2rem;
+    font-size: 1.05rem;
+    line-height: 1.82;
+    color: var(--muted);
+    max-width: 480px;
+    opacity: 0; animation: fadeUp .9s ease forwards .5s;
+  }
+
+  .hero-cta {
+    margin-top: 3rem;
+    display: flex; align-items: center; gap: 2rem;
+    opacity: 0; animation: fadeUp .9s ease forwards .7s;
+  }
+  .btn-dark {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem; letter-spacing: .1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: .9rem 2rem;
+    display: inline-block;
+    transition: background .2s, transform .2s;
+  }
+  .btn-dark:hover { background: var(--green); transform: translateY(-2px); }
+  .btn-ghost {
+    font-family: 'DM Mono', monospace;
+    font-size: .68rem; letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    opacity: .5;
+    display: flex; align-items: center; gap: .4rem;
+    transition: opacity .2s;
+  }
+  .btn-ghost::after { content: '↓'; }
+  .btn-ghost:hover { opacity: 1; }
+
+  /* right panel content */
+  .hero-right-content { position: relative; z-index: 1; }
+  .hero-stat-group {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    opacity: 0; animation: fadeUp .9s ease forwards .6s;
+  }
+  .hero-stat-n {
+    font-family: 'DM Serif Display', serif;
+    font-size: 3.2rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .hero-stat-l {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem; letter-spacing: .14em;
+    text-transform: uppercase;
+    color: rgba(242,237,228,.4);
+    margin-top: .4rem;
+  }
+  .hero-statement {
+    border-top: 1px solid rgba(242,237,228,.12);
+    padding-top: 2rem;
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.25rem;
+    line-height: 1.55;
+    color: rgba(242,237,228,.9);
+    font-style: italic;
+    opacity: 0; animation: fadeUp .9s ease forwards .8s;
+  }
+  .hero-statement cite {
+    display: block;
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem; letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-style: normal;
+    margin-top: 1rem;
+  }
+
+  /* ── RULE ── */
+  .rule { border: none; border-top: 1px solid var(--rule); }
+
+  /* ── INTRO TEXT ── editorial long-form à la Thinking Machines */
+  .intro {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 8rem 4.5rem;
+    border-left: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+  .intro-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 2.5rem;
+  }
+  .intro-lead {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    line-height: 1.42;
+    letter-spacing: -.01em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+  .intro-lead em { font-style: italic; color: var(--gold); }
+  .intro-body {
+    font-size: 1.02rem;
+    line-height: 1.88;
+    color: var(--muted);
+  }
+  .intro-body p { margin-bottom: 1.4rem; }
+  .intro-body strong { color: var(--ink); font-weight: 500; }
+
+  /* ── PRINCIPLES ── */
+  .principles {
+    border-top: 1px solid var(--rule);
+  }
+  .principles-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    padding: 5rem 4.5rem;
+    gap: 5rem;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .principles-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    padding-top: .25rem;
+  }
+  .principles-intro-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    line-height: 1.4;
+    letter-spacing: -.01em;
+  }
+
+  .principle {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5rem;
+    padding: 5rem 4.5rem;
+    border-bottom: 1px solid var(--rule);
+    transition: background .3s;
+    cursor: default;
+  }
+  .principle:hover { background: rgba(14,14,14,.02); }
+
+  .principle-left {}
+  .principle-num {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem; letter-spacing: .16em;
+    color: var(--gold);
+    margin-bottom: .8rem;
+  }
+  .principle-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.4rem;
+    line-height: 1.25;
+    letter-spacing: -.01em;
+    color: var(--ink);
+  }
+  .principle-title em { font-style: italic; color: var(--gold); }
+
+  .principle-right {}
+  .principle-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .principle-body {
+    font-size: .95rem;
+    line-height: 1.85;
+    color: var(--muted);
+  }
+  .principle-body p { margin-bottom: 1rem; }
+  .principle-body strong { color: var(--ink); font-weight: 500; }
+
+  /* ── WHO WE ARE ── */
+  .who {
+    background: var(--green);
+    padding: 8rem 4.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: start;
+    position: relative; overflow: hidden;
+  }
+  .who::before {
+    content: '';
+    position: absolute; inset: 0; opacity: .04;
+    background-image:
+      linear-gradient(rgba(178,146,42,1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(178,146,42,1) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .who-left { position: relative; z-index: 1; }
+  .who-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 2rem;
+  }
+  .who-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.15;
+    color: rgba(242,237,228,.95);
+  }
+  .who-headline em { font-style: italic; color: var(--gold); }
+  .who-body {
+    margin-top: 2rem;
+    font-size: .96rem;
+    line-height: 1.82;
+    color: rgba(242,237,228,.6);
+  }
+  .who-body p { margin-bottom: 1.2rem; }
+  .who-body strong { color: rgba(242,237,228,.9); font-weight: 500; }
+  .who-cta {
+    margin-top: 2.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem; letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-decoration: none;
+    display: flex; align-items: center; gap: .5rem;
+    transition: gap .2s;
+  }
+  .who-cta:hover { gap: .9rem; }
+  .who-cta::after { content: '→'; }
+
+  .who-right { position: relative; z-index: 1; }
+  .who-right-inner {
+    border: 1px solid rgba(178,146,42,.2);
+    padding: 3rem;
+    background: rgba(242,237,228,.04);
+  }
+  .who-right-title {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem; letter-spacing: .18em;
+    text-transform: uppercase;
+    color: rgba(242,237,228,.35);
+    margin-bottom: 2rem;
+  }
+  .credential-list {
+    list-style: none;
+    display: flex; flex-direction: column; gap: 1.2rem;
+  }
+  .credential {
+    display: flex; align-items: flex-start; gap: 1rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(242,237,228,.08);
+  }
+  .credential:last-child { border-bottom: none; padding-bottom: 0; }
+  .cred-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--gold); flex-shrink: 0;
+    margin-top: .45rem;
+  }
+  .cred-text {
+    font-size: .88rem;
+    line-height: 1.6;
+    color: rgba(242,237,228,.65);
+  }
+  .cred-text strong { color: rgba(242,237,228,.9); font-weight: 500; }
+
+  /* ── JOIN / CTA ── */
+  .join {
+    padding: 9rem 4.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .join-label {
+    font-family: 'DM Mono', monospace;
+    font-size: .62rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+  .join-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.12;
+    letter-spacing: -.01em;
+  }
+  .join-body {
+    margin-top: 1.8rem;
+    font-size: .96rem;
+    line-height: 1.82;
+    color: var(--muted);
+  }
+  .join-body p { margin-bottom: 1rem; }
+  .join-actions {
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+  .join-action {
+    display: flex; align-items: center; gap: 1.5rem;
+    padding: 1.8rem 2rem;
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    color: var(--ink);
+    transition: border-color .2s, background .2s;
+  }
+  .join-action:hover {
+    border-color: var(--gold);
+    background: rgba(184,146,42,.04);
+  }
+  .ja-icon {
+    width: 42px; height: 42px;
+    border: 1px solid var(--rule);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 1.1rem;
+  }
+  .ja-text {}
+  .ja-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1rem;
+    margin-bottom: .25rem;
+  }
+  .ja-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: .6rem; letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ja-arrow {
+    margin-left: auto;
+    font-size: 1rem;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateX(-6px);
+    transition: opacity .2s, transform .2s;
+  }
+  .join-action:hover .ja-arrow { opacity: 1; transform: translateX(0); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 3.5rem 4.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--rule);
+  }
+  .footer-logo {
+    font-family: 'DM Serif Display', serif;
+    font-size: .95rem;
+    color: var(--ink);
+  }
+  .footer-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: .58rem; letter-spacing: .1em;
+    color: var(--muted);
+    display: flex; gap: 2rem;
+  }
+  .footer-meta a { color: inherit; text-decoration: none; }
+  .footer-meta a:hover { color: var(--gold); }
+
+  /* ── PHASE BADGE ── */
+  .phase-badge {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+    background: var(--green);
+    color: var(--gold);
+    font-family: 'DM Mono', monospace;
+    font-size: .58rem; letter-spacing: .14em;
+    text-transform: uppercase;
+    padding: .45rem 1rem;
+    border: 1px solid rgba(178,146,42,.3);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+</head>
+<body>
+
+<div class="phase-badge">Phase 1 — Standalone</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">
+    <span class="nav-logo-name">Center for Wealth Data</span>
+    <div class="nav-logo-dot"></div>
+    <span class="nav-logo-url">wealthdata.org</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#principles">Our Principles</a></li>
+    <li><a href="#who">Who We Are</a></li>
+    <li><a href="#join">Work With Us</a></li>
+    <li><a href="#join" class="cta-link">Partner With Us</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="mission">
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Est. 2025 · wealthdata.org</span>
+    </div>
+    <h1 class="hero-headline">
+      Making the<br>
+      economics of<br>
+      <em>inequality</em><br>
+      legible.
+    </h1>
+    <p class="hero-body">
+      The Center for Wealth Data is an independent research institution that builds open data infrastructure, produces rigorous research, and translates economic evidence into tools for those working to close the wealth gap.
+    </p>
+    <div class="hero-cta">
+      <a href="#principles" class="btn-dark">Learn About Our Mission</a>
+      <a href="#principles" class="btn-ghost">Read our principles</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-right-content">
+      <div class="hero-stat-group">
+        <div>
+          <div class="hero-stat-n">40M+</div>
+          <div class="hero-stat-l">Data Points</div>
+        </div>
+        <div>
+          <div class="hero-stat-n">50</div>
+          <div class="hero-stat-l">States Covered</div>
+        </div>
+        <div>
+          <div class="hero-stat-n">3,200+</div>
+          <div class="hero-stat-l">Counties Mapped</div>
+        </div>
+        <div>
+          <div class="hero-stat-n">Open</div>
+          <div class="hero-stat-l">Access &amp; Free</div>
+        </div>
+      </div>
+      <blockquote class="hero-statement">
+        "You cannot close a gap you cannot see. We exist to make it visible — and to arm those working to close it."
+        <cite>— Center for Wealth Data, Mission Statement</cite>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ── INTRO ── -->
+<section class="intro">
+  <div class="intro-label">Why We Exist</div>
+  <p class="intro-lead">
+    The data infrastructure around wealth, ownership, and economic mobility in America is <em>fragmented, inaccessible, and politically contested</em>. We're here to fix that.
+  </p>
+  <div class="intro-body">
+    <p>
+      For decades, policymakers, advocates, journalists, and community leaders have had to make consequential decisions about wealth equity using data that is outdated, incomplete, or locked behind paywalls. The result: programs designed on bad evidence, gaps that persist, and narratives that outrun the facts.
+    </p>
+    <p>
+      <strong>The Center for Wealth Data was founded to change this.</strong> We produce and maintain the open data infrastructure, research tools, and translation resources that make the real economics of wealth — who has it, who doesn't, and why — legible to anyone who needs it.
+    </p>
+    <p>
+      We are nonpartisan, independent, and committed to open access. We believe that rigorous data in the hands of many is more powerful than proprietary data in the hands of few.
+    </p>
+  </div>
+</section>
+
+<!-- ── PRINCIPLES ── -->
+<section class="principles" id="principles">
+
+  <div class="principles-header">
+    <div class="principles-label">Our Principles</div>
+    <p class="principles-intro-text">
+      These are the commitments that shape how we work, what we build, and who we build it for.
+    </p>
+  </div>
+
+  <div class="principle">
+    <div class="principle-left">
+      <div class="principle-num">01</div>
+      <h2 class="principle-title">Open data is a <em>public good.</em></h2>
+    </div>
+    <div class="principle-right">
+      <p class="principle-tagline">Knowledge concentrated is power concentrated. We open it up.</p>
+      <div class="principle-body">
+        <p>
+          Wealth data has historically been expensive to produce, slow to publish, and difficult to use. The institutions best positioned to act on it — community organizations, local governments, investigative journalists — are often the least able to access it.
+        </p>
+        <p>
+          <strong>We make all of our core data and research freely available.</strong> No paywalls, no restricted licenses. We publish our methodology, share our code, and welcome scrutiny. We believe that data open to critique is data you can trust.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-left">
+      <div class="principle-num">02</div>
+      <h2 class="principle-title">Rigor is not <em>optional.</em></h2>
+    </div>
+    <div class="principle-right">
+      <p class="principle-tagline">The stakes of bad data are too high to cut corners on method.</p>
+      <div class="principle-body">
+        <p>
+          Wealth equity debates are often won or lost on the quality of evidence. Data that is ideologically motivated, methodologically weak, or insufficiently transparent can do real harm — reinforcing bad policy, undermining credibility, and eroding public trust.
+        </p>
+        <p>
+          <strong>We hold ourselves to peer-review standards</strong> even when publication speed is not required. We are transparent about limitations. We update our datasets as better evidence becomes available, and we are honest when the data does not tell a clean story.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-left">
+      <div class="principle-num">03</div>
+      <h2 class="principle-title">Context is <em>data too.</em></h2>
+    </div>
+    <div class="principle-right">
+      <p class="principle-tagline">Numbers without narrative mislead. We translate as well as publish.</p>
+      <div class="principle-body">
+        <p>
+          A county's median household wealth means nothing without understanding its housing market, its demographic history, its access to credit. Raw data, uncontextualized, can distort as easily as it can illuminate.
+        </p>
+        <p>
+          We invest heavily in <strong>policy translation</strong> — working alongside researchers, practitioners, and communities to make sure our data is interpreted correctly and used well. We produce explainers, methodology guides, and case studies alongside every major data release.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-left">
+      <div class="principle-num">04</div>
+      <h2 class="principle-title">The gap is <em>national.</em></h2>
+    </div>
+    <div class="principle-right">
+      <p class="principle-tagline">Wealth inequality is not a regional problem. Our scope matches the challenge.</p>
+      <div class="principle-body">
+        <p>
+          The racial and economic wealth gap is one of the most consequential structural features of American life. It shapes health outcomes, educational attainment, political participation, and intergenerational mobility. It is not a problem confined to particular cities, states, or communities.
+        </p>
+        <p>
+          <strong>We build national data infrastructure</strong> because that is the scale of the problem. Our datasets span all 50 states, over 3,200 counties, and reach back across decades — giving researchers and policymakers the longitudinal and geographic breadth to understand structural causes, not just surface-level symptoms.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="principle">
+    <div class="principle-left">
+      <div class="principle-num">05</div>
+      <h2 class="principle-title">Partners <em>multiply</em> impact.</h2>
+    </div>
+    <div class="principle-right">
+      <p class="principle-tagline">We do not work alone, and we do not intend to.</p>
+      <div class="principle-body">
+        <p>
+          Data infrastructure, like physical infrastructure, is most valuable when it is shared. Our datasets, tools, and research are designed to be built upon — by universities, nonprofits, government agencies, and journalists who can reach communities and decision-makers we cannot.
+        </p>
+        <p>
+          <strong>We actively seek research and institutional partnerships.</strong> We offer data licensing for academic use, collaborative research opportunities, and technical integration support for organizations building products or programs on top of our infrastructure.
+        </p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ── WHO WE ARE ── -->
+<section class="who" id="who">
+  <div class="who-left">
+    <div class="who-label">Who We Are</div>
+    <h2 class="who-headline">
+      Researchers, builders,<br>and translators.<br>
+      <em>Grounded in evidence.</em>
+    </h2>
+    <div class="who-body">
+      <p>
+        The Center for Wealth Data is a team of economists, data engineers, policy researchers, and communications professionals united by a conviction that <strong>better data produces better outcomes.</strong>
+      </p>
+      <p>
+        We are not an advocacy organization. We take no positions on specific legislation. We do take a firm position that accurate, open, rigorously produced data is a precondition for any meaningful progress on wealth equity — and that producing it is a mission worth dedicating a career to.
+      </p>
+    </div>
+    <a href="#join" class="who-cta">Work with us</a>
+  </div>
+
+  <div class="who-right">
+    <div class="who-right-inner">
+      <div class="who-right-title">What We Build &amp; Maintain</div>
+      <ul class="credential-list">
+        <li class="credential">
+          <div class="cred-dot"></div>
+          <div class="cred-text"><strong>National Wealth Database</strong> — 40M+ data points spanning household wealth, asset ownership, debt, and income across all U.S. counties, updated quarterly.</div>
+        </li>
+        <li class="credential">
+          <div class="cred-dot"></div>
+          <div class="cred-text"><strong>Wealth Indicators Tool</strong> — An interactive platform allowing policymakers, advocates, and journalists to explore county-level wealth data and generate custom analysis.</div>
+        </li>
+        <li class="credential">
+          <div class="cred-dot"></div>
+          <div class="cred-text"><strong>Longitudinal Research Archive</strong> — Peer-reviewed research papers, methodology guides, and data dictionaries published openly and indexed for academic use.</div>
+        </li>
+        <li class="credential">
+          <div class="cred-dot"></div>
+          <div class="cred-text"><strong>Policy Translation Library</strong> — Practitioner-facing explainers, case studies, and action guides that connect data insights to real-world program design.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── JOIN ── -->
+<section class="join" id="join">
+  <div>
+    <div class="join-label">Work With Us</div>
+    <h2 class="join-headline">
+      The work is<br>only beginning.
+    </h2>
+    <div class="join-body">
+      <p>
+        We are building the data infrastructure that the national conversation on wealth equity demands. Whether you are a researcher, a policymaker, a journalist, or an institution — there is a role for you in this work.
+      </p>
+      <p>
+        Follow us for updates on new data releases, research publications, and partnership opportunities.
+      </p>
+    </div>
+  </div>
+
+  <div class="join-actions">
+    <a href="#" class="join-action">
+      <div class="ja-icon">🤝</div>
+      <div class="ja-text">
+        <div class="ja-title">Partner With Us</div>
+        <div class="ja-sub">Research &amp; institutional partnerships</div>
+      </div>
+      <span class="ja-arrow">→</span>
+    </a>
+    <a href="#" class="join-action">
+      <div class="ja-icon">📊</div>
+      <div class="ja-text">
+        <div class="ja-title">Access the Data</div>
+        <div class="ja-sub">Open datasets &amp; API access</div>
+      </div>
+      <span class="ja-arrow">→</span>
+    </a>
+    <a href="#" class="join-action">
+      <div class="ja-icon">📰</div>
+      <div class="ja-text">
+        <div class="ja-title">Press &amp; Media</div>
+        <div class="ja-sub">Research briefings &amp; expert commentary</div>
+      </div>
+      <span class="ja-arrow">→</span>
+    </a>
+    <a href="#" class="join-action">
+      <div class="ja-icon">📬</div>
+      <div class="ja-text">
+        <div class="ja-title">Stay Informed</div>
+        <div class="ja-sub">Newsletter · data releases · events</div>
+      </div>
+      <span class="ja-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">Center for Wealth Data</div>
+  <div class="footer-meta">
+    <span>wealthdata.org</span>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Accessibility</a>
+    <span>© 2025</span>
+  </div>
+</footer>
+
+</body>
+</html>
