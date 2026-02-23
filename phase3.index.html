@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Center for Wealth Data | Formerly Black Wealth Data Center</title>
+<title>Black Wealth Data Center | Powered by Center for Wealth Data and Opportunity</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -15,87 +15,79 @@
   html{scroll-behavior:smooth;}
   body{background:var(--black);color:var(--white);font-family:'Libre Baskerville',Georgia,serif;overflow-x:hidden;}
 
-  /* ── TRANSITION BANNER ── */
-  .transition-bar{
-    background:var(--green2);
-    border-bottom:1px solid rgba(200,168,75,.25);
+  /* ── POWERED BY BANNER ── */
+  .powered-bar{
+    background:rgba(200,168,75,.1);
+    border-bottom:1px solid rgba(200,168,75,.2);
     padding:.6rem 5rem;
-    display:flex;justify-content:center;align-items:center;gap:1rem;
+    display:flex;justify-content:flex-end;align-items:center;gap:.8rem;
   }
-  .tb-text{
-    font-family:'IBM Plex Mono',monospace;font-size:.64rem;
+  .powered-label{
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;
     letter-spacing:.14em;text-transform:uppercase;
-    color:rgba(244,241,234,.6);
+    color:rgba(244,241,234,.45);
   }
-  .tb-link{
-    font-family:'IBM Plex Mono',monospace;font-size:.64rem;
-    letter-spacing:.12em;color:var(--gold);text-decoration:none;
+  .powered-logo{
+    display:flex;align-items:center;gap:.5rem;
+    text-decoration:none;
+    padding:.3rem .8rem;
+    border:1px solid rgba(200,168,75,.3);
+    transition:background .2s;
   }
-  .tb-link:hover{text-decoration:underline;}
+  .powered-logo:hover{background:rgba(200,168,75,.08);}
+  .powered-logo-mark{
+    width:18px;height:18px;border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .powered-logo-mark svg{width:11px;height:11px;fill:var(--gold);}
+  .powered-logo-text{
+    font-family:'IBM Plex Mono',monospace;font-size:.6rem;
+    letter-spacing:.12em;text-transform:uppercase;color:var(--gold);
+  }
 
   /* ── NAV ── */
   nav{
     position:sticky;top:0;z-index:100;
     display:flex;justify-content:space-between;align-items:center;
-    padding:1rem 5rem;
-    background:rgba(12,12,12,.97);
-    border-bottom:1px solid rgba(200,168,75,.2);
+    padding:0 4rem;
+    height:64px;
+    background:rgba(28,56,48,.98);
+    border-bottom:1px solid rgba(200,168,75,.18);
     backdrop-filter:blur(10px);
   }
-  /* CWD is BIG, BWDC is small below */
-  .nav-brand{display:flex;flex-direction:column;gap:.15rem;}
-  .nav-primary{display:flex;align-items:center;gap:.8rem;}
-  .logo-mark-lg{
-    width:42px;height:42px;
-    border:2px solid var(--gold);
-    background:rgba(200,168,75,.08);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .logo-mark-lg svg{width:24px;height:24px;fill:var(--gold);}
-  .primary-name{
-    font-family:'Bebas Neue',sans-serif;
-    font-size:1.2rem;letter-spacing:.18em;color:var(--gold);
-  }
-  .primary-url{
-    font-family:'IBM Plex Mono',monospace;font-size:.55rem;
-    letter-spacing:.1em;color:rgba(200,168,75,.5);
-  }
-  .nav-secondary{
-    display:flex;align-items:center;gap:.6rem;
-    padding:.25rem .6rem;
-    border:1px solid rgba(200,168,75,.15);
-    margin-left:50px; /* align under the name */
-    width:fit-content;
-  }
-  .logo-mark-sm{
-    width:18px;height:18px;
-    border:1px solid rgba(244,241,234,.3);
-    display:flex;align-items:center;justify-content:center;
-  }
-  .logo-mark-sm svg{width:10px;height:10px;fill:rgba(244,241,234,.5);}
-  .secondary-name{
-    font-family:'IBM Plex Mono',monospace;font-size:.58rem;
-    letter-spacing:.1em;text-transform:uppercase;
-    color:rgba(244,241,234,.4);
-  }
-  .nav-links{display:flex;gap:2.5rem;list-style:none;align-items:center;}
+  .nav-logo{display:flex;align-items:center;flex-shrink:0;}
+  .nav-links{display:flex;gap:1.8rem;list-style:none;align-items:center;flex-shrink:0;}
+  .nav-links li{display:flex;align-items:center;}
   .nav-links a{
-    font-family:'IBM Plex Mono',monospace;font-size:.65rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.62rem;
     letter-spacing:.1em;text-transform:uppercase;
-    color:var(--white);text-decoration:none;opacity:.65;transition:opacity .2s,color .2s;
+    color:var(--white);text-decoration:none;opacity:.7;
+    transition:opacity .2s;white-space:nowrap;line-height:1;
   }
-  .nav-links a:hover{opacity:1;color:var(--gold);}
-  .nav-links .login{border:1px solid rgba(200,168,75,.4);padding:.4rem .9rem;color:var(--gold);opacity:1;}
+  .nav-links a:hover{opacity:1;}
+  .nav-links .login{
+    border:1px solid rgba(200,168,75,.4);padding:.5rem 1rem;
+    color:var(--gold);opacity:1;white-space:nowrap;
+  }
+  .nav-links .login:hover{background:rgba(200,168,75,.1);}
 
   /* ── HERO ── */
   .hero{
-    min-height:88vh;display:flex;flex-direction:column;justify-content:flex-end;
-    padding:6rem 5rem 5rem;position:relative;overflow:hidden;
-    background:linear-gradient(165deg,var(--green) 0%,var(--green2) 55%,#0c0c0c 100%);
+    min-height:88vh;
+    display:flex;flex-direction:column;justify-content:flex-end;
+    padding:6rem 5rem 5rem;
+    position:relative;overflow:hidden;
+    background:linear-gradient(165deg,var(--green) 0%,var(--green2) 60%,#0c0c0c 100%);
+  }
+  .hero-img{
+    position:absolute;right:0;top:0;bottom:0;width:45%;
+    background:linear-gradient(to right,var(--green),transparent),
+      url('') center/cover;
+    opacity:.5;
   }
   .hero-content{position:relative;z-index:1;max-width:700px;}
   .hero-eyebrow{
-    font-family:'IBM Plex Mono',monospace;font-size:.68rem;
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;
     letter-spacing:.22em;text-transform:uppercase;
     color:var(--gold);margin-bottom:1.5rem;
     opacity:0;animation:up .8s ease forwards .2s;
@@ -108,7 +100,7 @@
   }
   h1 em{color:var(--gold);font-style:normal;}
   .hero-sub{
-    max-width:520px;margin-top:2rem;
+    max-width:500px;margin-top:2rem;
     font-size:1rem;line-height:1.8;color:var(--muted);
     opacity:0;animation:up .9s ease forwards .6s;
   }
@@ -116,29 +108,65 @@
     margin-top:3rem;display:flex;align-items:center;gap:2rem;
     opacity:0;animation:up .9s ease forwards .8s;
   }
-  .btn{font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:.9rem 2.2rem;display:inline-block;transition:all .22s;}
+  .btn{
+    font-family:'IBM Plex Mono',monospace;font-size:.7rem;
+    letter-spacing:.14em;text-transform:uppercase;text-decoration:none;
+    padding:.9rem 2.2rem;display:inline-block;transition:all .22s;
+  }
   .btn-gold{background:var(--gold);color:var(--black);font-weight:500;}
   .btn-gold:hover{background:var(--gold-lt);transform:translateY(-2px);}
-  .btn-outline{border:1px solid rgba(244,241,234,.35);color:var(--white);display:flex;align-items:center;gap:.5rem;}
+  .btn-outline{
+    border:1px solid rgba(244,241,234,.35);color:var(--white);
+    display:flex;align-items:center;gap:.5rem;
+  }
   .btn-outline::after{content:'→';}
   .btn-outline:hover{border-color:var(--white);}
 
-  /* shared section styles */
-  .search-wrap{padding:2.5rem 5rem;background:var(--green);border-bottom:1px solid rgba(200,168,75,.12);display:flex;justify-content:center;}
-  .search-bar{display:flex;width:100%;max-width:580px;border:1px solid rgba(200,168,75,.3);background:rgba(0,0,0,.2);}
-  .search-bar input{flex:1;background:transparent;border:none;outline:none;padding:.85rem 1.4rem;font-family:'IBM Plex Mono',monospace;font-size:.75rem;letter-spacing:.06em;color:var(--white);}
+  /* ── SEARCH ── */
+  .search-wrap{
+    padding:2.5rem 5rem;
+    background:var(--green);
+    border-bottom:1px solid rgba(200,168,75,.12);
+    display:flex;justify-content:center;
+  }
+  .search-bar{
+    display:flex;width:100%;max-width:580px;
+    border:1px solid rgba(200,168,75,.3);
+    background:rgba(0,0,0,.2);
+  }
+  .search-bar input{
+    flex:1;background:transparent;border:none;outline:none;
+    padding:.85rem 1.4rem;font-family:'IBM Plex Mono',monospace;
+    font-size:.75rem;letter-spacing:.06em;color:var(--white);
+  }
   .search-bar input::placeholder{color:rgba(244,241,234,.3);}
-  .search-bar button{background:var(--gold);border:none;cursor:pointer;padding:0 1.2rem;font-size:.95rem;transition:background .2s;}
+  .search-bar button{
+    background:var(--gold);border:none;cursor:pointer;
+    padding:0 1.2rem;font-size:.95rem;transition:background .2s;
+  }
   .search-bar button:hover{background:var(--gold-lt);}
 
-  .stats{display:grid;grid-template-columns:repeat(4,1fr);background:rgba(0,0,0,.3);border-bottom:1px solid rgba(200,168,75,.1);}
+  /* ── STATS ── */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    background:rgba(0,0,0,.3);
+    border-bottom:1px solid rgba(200,168,75,.1);
+  }
   .stat{padding:2.5rem 3rem;border-right:1px solid rgba(200,168,75,.1);}
   .stat:last-child{border-right:none;}
   .stat-n{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--gold);line-height:1;}
   .stat-l{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(244,241,234,.4);margin-top:.3rem;}
 
-  .insights{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:center;padding:7rem 5rem;border-bottom:1px solid rgba(200,168,75,.1);}
-  .map-ph{background:var(--green2);aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;border:1px solid rgba(200,168,75,.15);position:relative;overflow:hidden;}
+  /* ── INSIGHTS ── */
+  .insights{
+    display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:center;
+    padding:7rem 5rem;border-bottom:1px solid rgba(200,168,75,.1);
+  }
+  .map-ph{
+    background:var(--green2);aspect-ratio:4/3;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(200,168,75,.15);position:relative;overflow:hidden;
+  }
   .map-ph::before{content:'US WEALTH MAP';font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:rgba(200,168,75,.3);}
   .section-tag{font-family:'IBM Plex Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;}
   .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,3.5vw,2.8rem);letter-spacing:.04em;line-height:1.05;margin-bottom:1.4rem;}
@@ -146,51 +174,122 @@
   .section-body{font-size:.92rem;line-height:1.82;color:var(--muted);margin-bottom:.8rem;}
   .section-body a{color:var(--gold);text-decoration:none;}
 
-  .indicators{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(200,168,75,.1);border-bottom:1px solid rgba(200,168,75,.1);}
-  .ind-left{background:linear-gradient(135deg,var(--green) 0%,var(--green2) 100%);padding:4rem 5rem;border-right:1px solid rgba(200,168,75,.12);position:relative;}
-  .ind-left::before{content:'';position:absolute;top:2.2rem;left:1.8rem;width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 14px 0 var(--gold),0 28px 0 rgba(200,168,75,.3);}
-  .ind-right{background:rgba(0,0,0,.2);padding:4rem 5rem;display:flex;flex-direction:column;justify-content:center;gap:1.2rem;}
-  .county-input{border:1px solid rgba(200,168,75,.3);background:rgba(255,255,255,.04);padding:.8rem 1.2rem;width:100%;font-family:'IBM Plex Mono',monospace;font-size:.75rem;color:rgba(244,241,234,.4);outline:none;display:flex;justify-content:space-between;align-items:center;}
-  .gen-btn{background:rgba(244,241,234,.06);border:1px solid rgba(200,168,75,.25);padding:.85rem 1.2rem;font-family:'IBM Plex Mono',monospace;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--white);cursor:pointer;text-align:center;transition:background .2s;}
+  /* ── INDICATORS ── */
+  .indicators{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid rgba(200,168,75,.1);
+    border-bottom:1px solid rgba(200,168,75,.1);
+  }
+  .ind-left{
+    background:linear-gradient(135deg,var(--green) 0%,var(--green2) 100%);
+    padding:4rem 5rem;border-right:1px solid rgba(200,168,75,.12);
+    position:relative;
+  }
+  .ind-left::before{
+    content:'';position:absolute;top:2.2rem;left:1.8rem;
+    width:6px;height:6px;border-radius:50%;background:var(--gold);
+    box-shadow:0 14px 0 var(--gold),0 28px 0 rgba(200,168,75,.3);
+  }
+  .ind-right{
+    background:rgba(0,0,0,.2);padding:4rem 5rem;
+    display:flex;flex-direction:column;justify-content:center;gap:1.2rem;
+  }
+  .county-input{
+    border:1px solid rgba(200,168,75,.3);background:rgba(255,255,255,.04);
+    padding:.8rem 1.2rem;width:100%;
+    font-family:'IBM Plex Mono',monospace;font-size:.75rem;
+    color:rgba(244,241,234,.4);outline:none;
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .gen-btn{
+    background:rgba(244,241,234,.06);border:1px solid rgba(200,168,75,.25);
+    padding:.85rem 1.2rem;font-family:'IBM Plex Mono',monospace;
+    font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--white);cursor:pointer;text-align:center;transition:background .2s;
+  }
   .gen-btn:hover{background:rgba(200,168,75,.12);}
 
-  .mission{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;padding:7rem 5rem;border-bottom:1px solid rgba(200,168,75,.1);}
-  .video-ph{background:var(--green2);aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;border:1px solid rgba(200,168,75,.15);position:relative;}
-  .play{width:56px;height:56px;border-radius:50%;background:rgba(200,168,75,.12);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;}
+  /* ── MISSION ── */
+  .mission{
+    display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+    padding:7rem 5rem;border-bottom:1px solid rgba(200,168,75,.1);
+  }
+  .video-ph{
+    background:var(--green2);aspect-ratio:16/9;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid rgba(200,168,75,.15);position:relative;
+  }
+  .play{
+    width:56px;height:56px;border-radius:50%;
+    background:rgba(200,168,75,.12);border:2px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+  }
   .play::after{content:'▶';color:var(--gold);margin-left:4px;}
   .video-label{position:absolute;bottom:1rem;left:1rem;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(244,241,234,.45);}
 
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(200,168,75,.1);}
-  .card{background:var(--green);padding:3rem 2.8rem;transition:background .3s;position:relative;overflow:hidden;}
-  .card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+  /* ── CARDS ── */
+  .cards{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:1px;background:rgba(200,168,75,.1);
+  }
+  .card{
+    background:var(--green);padding:3rem 2.8rem;
+    transition:background .3s;position:relative;overflow:hidden;
+  }
+  .card::after{
+    content:'';position:absolute;top:0;left:0;right:0;height:2px;
+    background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s;
+  }
   .card:hover{background:var(--green2);}
   .card:hover::after{transform:scaleX(1);}
   .card-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:.05em;margin-bottom:1.2rem;}
   .card-body{font-size:.85rem;line-height:1.78;color:var(--muted);margin-bottom:2rem;}
-  .card-link{font-family:'IBM Plex Mono',monospace;font-size:.63rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;border:1px solid rgba(200,168,75,.4);padding:.5rem 1.1rem;display:inline-block;transition:background .2s;}
+  .card-link{
+    font-family:'IBM Plex Mono',monospace;font-size:.63rem;
+    letter-spacing:.14em;text-transform:uppercase;
+    color:var(--gold);text-decoration:none;
+    border:1px solid rgba(200,168,75,.4);padding:.5rem 1.1rem;
+    display:inline-block;transition:background .2s;
+  }
   .card-link:hover{background:rgba(200,168,75,.1);}
 
-  .cta{padding:6.5rem 5rem;text-align:center;background:linear-gradient(135deg,rgba(200,168,75,.12),rgba(200,168,75,.04));border-top:1px solid rgba(200,168,75,.1);border-bottom:1px solid rgba(200,168,75,.1);}
+  /* ── CTA ── */
+  .cta{
+    padding:6.5rem 5rem;text-align:center;
+    background:linear-gradient(135deg,rgba(200,168,75,.15),rgba(200,168,75,.05));
+    border-top:1px solid rgba(200,168,75,.1);
+    border-bottom:1px solid rgba(200,168,75,.1);
+  }
   .cta-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,4.5vw,3.8rem);letter-spacing:.04em;margin-bottom:1rem;}
   .cta-sub{font-size:.96rem;line-height:1.75;color:var(--muted);max-width:460px;margin:0 auto 2.5rem;}
-  .cta-btn{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;background:transparent;border:2px solid var(--white);color:var(--white);padding:1rem 2.2rem;cursor:pointer;text-decoration:none;display:inline-block;transition:all .22s;}
+  .cta-btn{
+    font-family:'IBM Plex Mono',monospace;font-size:.72rem;
+    letter-spacing:.14em;text-transform:uppercase;
+    background:transparent;border:2px solid var(--white);
+    color:var(--white);padding:1rem 2.2rem;cursor:pointer;
+    text-decoration:none;display:inline-block;transition:all .22s;
+  }
   .cta-btn:hover{background:var(--white);color:var(--black);}
 
-  /* ── FOOTER — CWD primary ── */
-  footer{padding:4rem 5rem;background:rgba(0,0,0,.5);border-top:1px solid rgba(200,168,75,.12);}
-  .footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1.2fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(200,168,75,.1);}
-  .footer-brand{}
-  .fb-primary{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.14em;color:var(--gold);display:block;margin-bottom:.15rem;}
-  .fb-primary-url{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:rgba(200,168,75,.4);}
-  .fb-secondary{
-    display:flex;align-items:center;gap:.5rem;
-    margin-top:.8rem;padding:.35rem .6rem;
-    border:1px solid rgba(200,168,75,.15);width:fit-content;
-    opacity:.7;
+  /* ── FOOTER ── */
+  footer{
+    padding:4rem 5rem;background:rgba(0,0,0,.5);
+    border-top:1px solid rgba(200,168,75,.12);
   }
-  .fbs-icon{width:16px;height:16px;border:1px solid rgba(244,241,234,.25);display:flex;align-items:center;justify-content:center;}
-  .fbs-icon svg{width:9px;height:9px;fill:rgba(244,241,234,.45);}
-  .fbs-text{font-family:'IBM Plex Mono',monospace;font-size:.56rem;letter-spacing:.09em;text-transform:uppercase;color:rgba(244,241,234,.4);}
+  .footer-grid{
+    display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1.2fr;
+    gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(200,168,75,.1);
+  }
+  .footer-brand-name{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.12em;color:var(--white);margin-bottom:.3rem;}
+  .footer-powered{
+    display:flex;align-items:center;gap:.5rem;margin-top:.5rem;
+    padding:.4rem .7rem;border:1px solid rgba(200,168,75,.2);
+    align-self:flex-start;width:fit-content;
+  }
+  .fp-label{font-family:'IBM Plex Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(244,241,234,.35);}
+  .fp-logo-m{width:14px;height:14px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;}
+  .fp-logo-m svg{width:8px;height:8px;fill:var(--gold);}
+  .fp-name{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:var(--gold);}
   .footer-col h4{font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem;}
   .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem;}
   .footer-col a{font-size:.78rem;color:rgba(244,241,234,.5);text-decoration:none;transition:color .2s;}
@@ -202,38 +301,29 @@
   .footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:2rem;}
   .footer-copy{font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.08em;color:rgba(244,241,234,.25);}
 
-  .phase-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;background:var(--gold);color:var(--black);font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 1rem;font-weight:500;}
+  .phase-badge{position:fixed;bottom:1.5rem;right:1.5rem;z-index:200;background:var(--green2);border:1px solid var(--gold);color:var(--gold);font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:.45rem 1rem;}
 
   @keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 </style>
 </head>
 <body>
-<div class="phase-badge">Phase 3 — CWD Primary Brand</div>
+<div class="phase-badge">Phase 2 — BWDC Powered by CWD</div>
 
-<!-- TRANSITION BANNER -->
-<div class="transition-bar">
-  <span class="tb-text">Black Wealth Data Center has evolved into the Center for Wealth Data —</span>
-  <a href="#" class="tb-link">Learn about our journey →</a>
+<!-- POWERED BY BANNER -->
+<div class="powered-bar">
+  <span class="powered-label">Powered by</span>
+  <a href="https://wealthdata.org" class="powered-logo">
+    <div class="powered-logo-mark">
+      <svg viewBox="0 0 40 40"><ellipse cx="20" cy="16" rx="11" ry="9"/><rect x="17" y="24" width="6" height="9" rx="3"/><rect x="10" y="12" width="20" height="3" rx="1.5"/></svg>
+    </div>
+    <span class="powered-logo-text">Center for Wealth Data and Opportunity · wealthdata.org</span>
+  </a>
 </div>
 
-<!-- NAV — CWD bigger, BWDC smaller secondary -->
+<!-- NAV (BWDC is primary) -->
 <nav>
-  <div class="nav-brand">
-    <div class="nav-primary">
-      <div class="logo-mark-lg">
-        <svg viewBox="0 0 40 40"><ellipse cx="20" cy="16" rx="11" ry="9"/><rect x="17" y="24" width="6" height="9" rx="3"/><rect x="10" y="12" width="20" height="3" rx="1.5"/></svg>
-      </div>
-      <div>
-        <div class="primary-name">Center for Wealth Data</div>
-        <div class="primary-url">wealthdata.org</div>
-      </div>
-    </div>
-    <div class="nav-secondary">
-      <div class="logo-mark-sm">
-        <svg viewBox="0 0 40 40"><ellipse cx="20" cy="16" rx="11" ry="9"/><rect x="17" y="24" width="6" height="9" rx="3"/><rect x="10" y="12" width="20" height="3" rx="1.5"/></svg>
-      </div>
-      <span class="secondary-name">Formerly Black Wealth Data Center</span>
-    </div>
+  <div class="nav-logo">
+    <img src="" alt="Black Wealth Data Center" style="height:40px;width:auto;display:block;">
   </div>
   <ul class="nav-links">
     <li><a href="#">Platform ▾</a></li>
@@ -250,7 +340,7 @@
   <div class="hero-content">
     <div class="hero-eyebrow">Data to</div>
     <h1>EMPOWER</h1>
-    <p class="hero-sub">The Center for Wealth Data produces open, rigorous data infrastructure that makes economic inequality visible — and changeable. Built on the foundation of the Black Wealth Data Center.</p>
+    <p class="hero-sub">Dive in and access national and county-level data that provides insights on how factors like education, employment, asset ownership, and other indicators contribute to wealth.</p>
     <div class="hero-cta">
       <a href="#" class="btn btn-gold">Learn About Our Mission</a>
       <a href="#" class="btn btn-outline">Explore Data</a>
@@ -304,14 +394,14 @@
 <section class="mission">
   <div>
     <div class="section-tag">Your Go-To Data Resource</div>
-    <h2 class="section-title">The <em>National Standard</em> for Wealth Data</h2>
-    <p class="section-body">Most data that leaders rely on to design programs and policies that advance wealth equity is outdated or incomplete. The Center for Wealth Data intends to fuel the creation of a national standard for wealth equity and drive nonpartisan, evidence-based decisions.</p>
+    <h2 class="section-title">The Black Wealth Data Center</h2>
+    <p class="section-body">Most data that leaders rely on to design programs and policies that advance wealth equity is outdated or incomplete. The Black Wealth Data Center intends to fuel the creation of a national standard for wealth equity and drive nonpartisan, evidence-based decisions.</p>
     <br>
     <a href="#" class="btn btn-outline" style="margin-top:.5rem;">Who We Are</a>
   </div>
   <div class="video-ph">
     <div class="play"></div>
-    <div class="video-label">Center for Wealth Data</div>
+    <div class="video-label">The Black Wealth Data Center</div>
   </div>
 </section>
 
@@ -324,7 +414,7 @@
   </div>
   <div class="card">
     <div class="card-title">Data Methodology</div>
-    <p class="card-body">Learn more about the Center for Wealth Data's commitment to research and analysis by implementing continuous data improvement practices.</p>
+    <p class="card-body">Learn more about the Black Wealth Data Center's commitment to research and analysis by implementing continuous data improvement practices.</p>
     <a href="#" class="card-link">Learn More</a>
   </div>
   <div class="card">
@@ -337,19 +427,20 @@
 <!-- CTA -->
 <section class="cta">
   <h2 class="cta-title">Dive In and Discover More</h2>
-  <p class="cta-sub">Getting the data you need has never been easier. Unlock all of the Center for Wealth Data's features and data by creating an account today.</p>
+  <p class="cta-sub">Getting the data you need has never been easier. Unlock all of the Black Wealth Data Center's features and data by creating an account today.</p>
   <a href="#" class="cta-btn">Create a Free Account</a>
 </section>
 
-<!-- FOOTER — CWD is primary -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <span class="fb-primary">Center for Wealth Data</span>
-      <span class="fb-primary-url">wealthdata.org</span>
-      <div class="fb-secondary">
-        <div class="fbs-icon"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="16" rx="11" ry="9"/><rect x="17" y="24" width="6" height="9" rx="3"/><rect x="10" y="12" width="20" height="3" rx="1.5"/></svg></div>
-        <span class="fbs-text">Formerly Black Wealth Data Center</span>
+      <img src="" alt="Black Wealth Data Center" style="height:28px;width:auto;display:block;margin-bottom:.5rem;filter:brightness(0) invert(1);opacity:.75;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:.58rem;color:rgba(244,241,234,.35);letter-spacing:.08em;">blackwealthdata.org</div>
+      <div class="footer-powered">
+        <span class="fp-label">Powered by</span>
+        <div class="fp-logo-m"><svg viewBox="0 0 40 40"><ellipse cx="20" cy="16" rx="11" ry="9"/><rect x="17" y="24" width="6" height="9" rx="3"/><rect x="10" y="12" width="20" height="3" rx="1.5"/></svg></div>
+        <span class="fp-name">wealthdata.org</span>
       </div>
     </div>
     <div class="footer-col">
@@ -366,12 +457,12 @@
     </div>
     <div class="footer-col">
       <h4>Stay Informed</h4>
-      <p style="font-size:.76rem;color:var(--muted);margin-bottom:.8rem;">Stay in touch to receive updates on new features, datasets, insights, and the latest news and developments.</p>
+      <p style="font-size:.76rem;color:var(--muted);margin-bottom:.8rem;">Stay in touch to receive updates on new features and datasets, insights, and the latest news and developments.</p>
       <div class="nl-input"><input type="email" placeholder="Your email"><button>Subscribe</button></div>
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 Center for Wealth Data · wealthdata.org</div>
+    <div class="footer-copy">© 2025 Black Wealth Data Center 6.91</div>
     <div class="footer-copy">Privacy · Terms · Accessibility</div>
   </div>
 </footer>
